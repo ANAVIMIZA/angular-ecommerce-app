@@ -3,7 +3,7 @@ name: CI/CD Deploy to AWS EC2
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -37,15 +37,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/angular-ecommerce-app
-
-            # Puxa as últimas mudanças do repositório
             git pull
-
-            # Atualiza imagem do Docker Hub
             docker pull anavimiza/angular-ecommerce-app:prod
-
-            # Derruba containers antigos e sobe de novo
             docker-compose down
             docker-compose up -d
-
             echo "✅ Deploy concluído com sucesso!"
